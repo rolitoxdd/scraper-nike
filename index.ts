@@ -12,6 +12,8 @@ type OutputRow = Row & {
   price?: number;
   listPrice?: number;
   priceWithoutDiscount?: number;
+  title?: string;
+  description?: string;
 };
 
 async function run() {
@@ -38,6 +40,8 @@ async function run() {
       const priceWithoutDiscount: number =
         data.hits.hits[0]._source.items[0].sellers[0].commertialOffer
           .PriceWithoutDiscount;
+      const title = data.hits.hits[0]._source.productName;
+      const description = data.hits.hits[0]._source.description;
       outputData.push({
         id,
         name,
@@ -46,6 +50,8 @@ async function run() {
         price,
         listPrice,
         priceWithoutDiscount,
+        title,
+        description,
       });
     }
   }
