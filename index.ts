@@ -9,9 +9,10 @@ type Row = {
 type OutputRow = Row & {
   status: string;
   url?: string;
-  price?: number;
-  listPrice?: number;
-  priceWithoutDiscount?: number;
+  listPriceLowPrice?: number;
+  listPriceHighPrice?: number;
+  sellingPriceLowPrice?: number;
+  sellingPriceHighPrice?: number;
   title?: string;
   description?: string;
 };
@@ -29,27 +30,30 @@ async function run() {
   for (const { id, name } of excelData) {
     console.log(`fetching ${++i} of ${excelData.length}: ${id}`);
     const data = await searchProduct(id);
-    if (data.length === 0) {
+    if (data.data.productSuggestions.products.length === 0) {
       outputData.push({ id, name, status: "Not found" });
     } else {
-      const linkText: string = data.hits.hits[0]._source.linkText;
-      const price: number =
-        data.hits.hits[0]._source.items[0].sellers[0].commertialOffer.Price;
-      const listPrice: number =
-        data.hits.hits[0]._source.items[0].sellers[0].commertialOffer.ListPrice;
-      const priceWithoutDiscount: number =
-        data.hits.hits[0]._source.items[0].sellers[0].commertialOffer
-          .PriceWithoutDiscount;
-      const title = data.hits.hits[0]._source.productName;
-      const description = data.hits.hits[0]._source.description;
+      const product = data.data.productSuggestions.products.find(
+        (product: any) => product.productReference === id
+      );
+      const linkText = product.linkText;
+      const listPrice = product.priceRange.listPrice;
+      const listPriceLowPrice = listPrice.lowPrice;
+      const listPriceHighPrice = listPrice.highPrice;
+      const sellingPrice = product.priceRange.sellingPrice;
+      const sellingPriceLowPrice = sellingPrice.lowPrice;
+      const sellingPriceHighPrice = sellingPrice.highPrice;
+      const title = product.productName;
+      const description = product.description;
       outputData.push({
         id,
         name,
         status: "Found",
         url: `https://www.nike.cl/${linkText}/p`,
-        price,
-        listPrice,
-        priceWithoutDiscount,
+        listPriceLowPrice,
+        listPriceHighPrice,
+        sellingPriceLowPrice,
+        sellingPriceHighPrice,
         title,
         description,
       });
