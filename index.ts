@@ -30,7 +30,16 @@ async function run() {
   for (const { id, name } of excelData) {
     console.log(`fetching ${++i} of ${excelData.length}: ${id}`);
     const data = await searchProduct(id);
-    const product = data.data.productSuggestions.products.find(
+
+    let products = data.data.productSuggestions.products;
+
+    if (products === null) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const data = await searchProduct(id);
+      products = data.data.productSuggestions.products;
+    }
+
+    const product = products?.find(
       (product: any) => product.productReference === id
     );
     if (!product) {
