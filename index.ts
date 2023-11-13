@@ -30,12 +30,12 @@ async function run() {
   for (const { id, name } of excelData) {
     console.log(`fetching ${++i} of ${excelData.length}: ${id}`);
     const data = await searchProduct(id);
-    if (data.data.productSuggestions.products.length === 0) {
+    const product = data.data.productSuggestions.products.find(
+      (product: any) => product.productReference === id
+    );
+    if (!product) {
       outputData.push({ id, name, status: "Not found" });
     } else {
-      const product = data.data.productSuggestions.products.find(
-        (product: any) => product.productReference === id
-      );
       const linkText = product.linkText;
       const listPrice = product.priceRange.listPrice;
       const listPriceLowPrice = listPrice.lowPrice;
