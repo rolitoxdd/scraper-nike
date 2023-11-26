@@ -13,6 +13,8 @@ type OutputRow = Row & {
   listPriceHighPrice?: number;
   sellingPriceLowPrice?: number;
   sellingPriceHighPrice?: number;
+  listPrice?: string;
+  price?: string;
   title?: string;
   description?: string;
 };
@@ -52,6 +54,13 @@ async function run() {
       const sellingPrice = product.priceRange.sellingPrice;
       const sellingPriceLowPrice = sellingPrice.lowPrice;
       const sellingPriceHighPrice = sellingPrice.highPrice;
+
+      const firstItem = product.items[0];
+      const firstSeller = firstItem.listPrice.sellers[0];
+
+      const listPrice1 = firstSeller.comertialOffer.ListPrice;
+      const price1 = firstSeller.comertialOffer.Price;
+
       const title = product.productName;
       const description = product.description;
       outputData.push({
@@ -65,6 +74,8 @@ async function run() {
         sellingPriceHighPrice,
         title,
         description,
+        price: price1,
+        listPrice: listPrice1,
       });
     }
   }
