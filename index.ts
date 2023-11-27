@@ -42,7 +42,8 @@ async function run() {
     }
 
     const product = products?.find(
-      (product: any) => product.productReference === id
+      (product: any) =>
+        product.productReference.toLowerCase() === id.toLowerCase()
     );
     if (!product) {
       outputData.push({ id, name, status: "Not found" });
@@ -56,10 +57,10 @@ async function run() {
       const sellingPriceHighPrice = sellingPrice.highPrice;
 
       const firstItem = product.items[0];
-      const firstSeller = firstItem.listPrice.sellers[0];
+      const firstSeller = firstItem.sellers[0];
 
-      const listPrice1 = firstSeller.comertialOffer.ListPrice;
-      const price1 = firstSeller.comertialOffer.Price;
+      const listPrice1 = firstSeller.commertialOffer.ListPrice;
+      const price1 = firstSeller.commertialOffer.Price;
 
       const title = product.productName;
       const description = product.description;
