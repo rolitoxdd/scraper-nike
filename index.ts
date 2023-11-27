@@ -33,12 +33,12 @@ async function run() {
     console.log(`fetching ${++i} of ${excelData.length}: ${id}`);
     const data = await searchProduct(id);
 
-    let products = data.data.productSuggestions.products;
+    let products = data?.data?.productSuggestions?.products;
 
-    if (products === null) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    if (data?.data?.productSuggestions === null || products === null) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       const data = await searchProduct(id);
-      products = data.data.productSuggestions.products;
+      products = data?.data?.productSuggestions?.products;
     }
 
     const product = products?.find(
