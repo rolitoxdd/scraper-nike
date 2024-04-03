@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "compile": "pkg dist/index.js --out-path bin",
+    "compile": "pkg -t node16-mac,node16-linux,node16-win-x64 dist/index.js --out-path bin",
     "build:compile": "npm run build && npm run compile"
   },
   "bin": "dist/index.js",
@@ -16,6 +16,7 @@
   "dependencies": {
     "node-fetch": "^2.3.1",
     "pkg": "^5.8.1",
+    "tsx": "^4.7.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
