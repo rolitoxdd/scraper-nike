@@ -7,7 +7,7 @@ type Row = {
 };
 
 type OutputRow = Row & {
-  status: string;
+  status: "Found" | "Not found";
   url?: string;
   listPriceLowPrice?: number;
   listPriceHighPrice?: number;

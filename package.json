@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "compile": "pkg -t node16-mac,node16-linux,node16-win-x64 dist/index.js --out-path bin",
-    "build:compile": "npm run build && npm run compile"
+    "compile": "tsc",
+    "build:cl": "pkg -t node16-mac,node16-linux,node16-win-x64 dist/cl/index.js --out-path bin/cl",
+    "build:pe": "pkg -t node16-mac,node16-linux,node16-win-x64 dist/pe/index.js -o bin/pe/peru",
+    "compile:build": "npm run build && npm run compile"
   },
   "bin": "dist/index.js",
   "keywords": [],
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.3.1",
+    "node-html-parser": "^6.1.13",
     "pkg": "^5.8.1",
     "tsx": "^4.7.1",
     "xlsx": "^0.18.5"
