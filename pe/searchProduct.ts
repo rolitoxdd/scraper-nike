@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { parse } from "node-html-parser";
+import { cleanPrice } from "./cleanPrice";
 
 export async function searchProduct(
   id: string
@@ -23,9 +24,11 @@ export async function searchProduct(
   const url = product.attributes["href"];
   const priceRoot = product.querySelector(".price");
 
-  const price = priceRoot?.querySelector(".sales")?.text.trim() || "";
+  const price = cleanPrice(priceRoot?.querySelector(".sales")?.text) || "";
   const fullPrice =
-    priceRoot?.querySelector(".strike-through")?.text.trim() || price || "";
+    cleanPrice(priceRoot?.querySelector(".strike-through")?.text) ||
+    price ||
+    "";
 
   return { url, price, fullPrice };
 }
