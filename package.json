@@ -9,7 +9,8 @@
     "build:cl": "pkg -t node16-mac,node16-linux,node16-win-x64 dist/cl/index.js --out-path bin/cl",
     "build:pe": "pkg --compress GZip -t node16-mac,node16-linux,node16-win-x64 dist/pe/index.js -o bin/pe/peru",
     "compile:build:all": "npm run compile && npm run build:cl && npm run build:pe",
-    "compile:build:pe": "npm run compile && npm run build:pe"
+    "compile:build:pe": "npm run compile && npm run build:pe",
+    "compile:build:cl": "npm run compile && npm run build:cl"
   },
   "bin": "dist/index.js",
   "keywords": [],
